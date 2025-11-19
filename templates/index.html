@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hoje 🗓️</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <p class="frase">{{ frase_do_dia }}</p>
+      <div class="titulo-com-switch">
+        <h2>Meu dia hoje</h2>
+        <div class="switch-wrapper" id="switch-tema">
+          <span class="icone-tema" id="icone-tema">☀️</span>
+          <div class="switch">
+            <div class="slider"></div>
+          </div>
+        </div>
+      </div>
+
+      <form method="POST">
+        <input
+          type="text"
+          id="nova-tarefa"
+          name="nova_tarefa"
+          placeholder="hoje eu preciso..."
+        />
+        <button type="submit">Só digite e dê enter</button>
+      </form>
+
+      <ul class="sem-ponto">
+        {% for tarefa in tarefas %}
+        <li>
+          <div class="tarefa-item">
+            <form
+              action="{{ url_for('resolver', id=loop.index0) }}"
+              method="POST"
+            >
+              <input type="checkbox" onchange="this.form.submit()" />
+            </form>
+            <span>{{ tarefa }}</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <hr />
+
+      <h2>Já fiz</h2>
+
+      <ul class="sem-ponto">
+        {% for tarefa in resolvidas %}
+        <li class="riscado">{{ tarefa }}</li>
+        {% endfor %}
+      </ul>
+      {% if resolvidas %}
+      <form
+        action="{{ url_for('limpar_resolvidas') }}"
+        method="POST"
+        style="margin-bottom: 20px"
+      >
+        <button type="submit">Deu por hoje</button>
+      </form>
+      {% endif %}
+    </div>
+    <script>
+      window.onload = function () {
+        const input = document.getElementById('nova-tarefa')
+        if (input) {
+          input.focus()
+        }
+      }
+      const switchTema = document.getElementById('switch-tema')
+      const iconeTema = document.getElementById('icone-tema')
+
+      const temaSalvo = localStorage.getItem('tema')
+      if (temaSalvo === 'claro') {
+        document.body.classList.add('claro')
+        iconeTema.textContent = '🕶️'
+      }
+
+      switchTema.addEventListener('click', () => {
+        const claroAtivo = document.body.classList.toggle('claro')
+        localStorage.setItem('tema', claroAtivo ? 'claro' : 'escuro')
+        iconeTema.textContent = claroAtivo ? '🕶️' : '☀️'
+      })
+
+      document.body.classList.contains('claro')
+    </script>
+  </body>
+</html>
