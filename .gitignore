@@ -10,3 +10,4 @@ instance/
 *.log
 .DS_Store
 .env
+.vscode/
