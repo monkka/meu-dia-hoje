@@ -16,7 +16,8 @@ frases = [
     "A vida é uma planilha, e eu tô tentando não dar erro.",
     "Tem dias que a gente precisa chutar o balde e pisar na areia. ⛱️",
     "I never cry (just watching movies), and I am so productive🎶  . It's an art!",
-    "Menos é mais. Ser simples requer tempo e esforço."
+    "Menos é mais. Ser simples requer tempo e esforço.",
+    "Ninguém está seguro quando pensa ser seu privilégio decidir por si mesmo"
 ]
 
 frase_do_dia = ""
